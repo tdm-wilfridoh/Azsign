@@ -1,0 +1,19 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "https://www.dataaccess.com/webservicesserver/numberconversion.wso?WSDL"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, ServiceReference1"
+    ],
+    "references": [
+      "NuGet.Versioning, {NuGet.Versioning, 4.5.0}"
+    ],
+    "targetFramework": "net5.0",
+    "typeReuseMode": "Specified"
+  }
+}

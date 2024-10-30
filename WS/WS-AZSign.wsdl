@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Andres Schlesinger (Analitica) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:azsw="http://www.analitica.com.co/AZSign/WS" xmlns:azs="http://www.analitica.com.co/AZSign/Esquemas" xmlns:err="http://www.analitica.com.co/Esquemas/Errores/" name="ServiciosAZSign" targetNamespace="http://www.analitica.com.co/AZSign/WS">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.analitica.com.co/AZSign/WS" elementFormDefault="qualified">
+			<xs:import namespace="http://www.analitica.com.co/AZSign/Esquemas" schemaLocation=".\WS-AZSign.xsd"/>
+			<xs:import namespace="http://www.analitica.com.co/Esquemas/Errores/" schemaLocation=".\Errores.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="Acuerdo_In">
+		<wsdl:part name="parameter" element="azs:Acuerdo"/>
+	</wsdl:message>
+	<wsdl:message name="Acuerdo_Out">
+		<wsdl:part name="parameter" element="azs:AcuerdoRsp"/>
+	</wsdl:message>
+	<wsdl:message name="Acuerdo_Fault"/>
+	<wsdl:message name="SolicitarDocumento_In">
+		<wsdl:part name="parameter" element="azs:SolicitarDocumento"/>
+	</wsdl:message>
+	<wsdl:message name="NewMessage2"/>
+	<wsdl:message name="gfwSolicitarDocumento_Fault"/>
+	<wsdl:message name="SolicitarInfoAcuerdo_In">
+		<wsdl:part name="parameter" element="azs:SolicitarAcuerdoInfo"/>
+	</wsdl:message>
+	<wsdl:message name="SolicitarInfoAcuerdo_Out">
+		<wsdl:part name="parameter" element="azs:AcuerdoInfo"/>
+	</wsdl:message>
+	<wsdl:message name="NewMessage"/>
+	<wsdl:message name="SolicitarAcuerdo_Fault"/>
+	<wsdl:message name="NewMessage3"/>
+	<wsdl:message name="NewMessage4"/>
+	<wsdl:message name="NewMessage5"/>
+	<wsdl:message name="SolicitarDocumento_Out">
+		<!-- <wsdl:part name="parameter" element="azs:SolicitudDocumentoRsp"/> -->
+		<!-- <wsdl:part name="parameter" element="azs:Documento1"/> -->
+	</wsdl:message>
+	<wsdl:message name="SolicitarDocumentoFault"/>
+	<wsdl:portType name="ServiciosAZSign_SOAP">
+		<wsdl:operation name="Acuerdo">
+			<wsdl:input message="azsw:Acuerdo_In"/>
+			<wsdl:output message="azsw:Acuerdo_Out"/>
+			<wsdl:fault name="Error" message="azsw:Acuerdo_Fault"/>
+		</wsdl:operation>
+		<wsdl:operation name="SolicitarInfoAcuerdo">
+			<wsdl:input message="azsw:SolicitarInfoAcuerdo_In"/>
+			<wsdl:output message="azsw:SolicitarInfoAcuerdo_Out"/>
+			<wsdl:fault name="Error" message="azsw:SolicitarAcuerdo_Fault"/>
+		</wsdl:operation>
+		<!-- <wsdl:operation name="SolicitarDocumento"> -->
+			<!-- <wsdl:input message="azsw:SolicitarDocumento_In"/> -->
+			<!-- <wsdl:output message="azsw:SolicitarDocumento_Out"/> -->
+			<!-- <wsdl:fault name="FaultName" message="azsw:SolicitarDocumentoFault"/> -->
+		<!-- </wsdl:operation> -->
+	</wsdl:portType>
+	<wsdl:binding name="ServiciosAZSign_SOAP" type="azsw:ServiciosAZSign_SOAP">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Acuerdo">
+			<soap:operation soapAction="urn:#Acuerdo"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Error"/>
+		</wsdl:operation>
+		<wsdl:operation name="SolicitarInfoAcuerdo">
+			<soap:operation soapAction="urn:#NewOperation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Error"/>
+		</wsdl:operation>
+		<!-- <wsdl:operation name="SolicitarDocumento"> -->
+			<!-- <soap:operation soapAction="urn:#NewOperation"/> -->
+			<!-- <wsdl:input> -->
+				<!-- <soap:body use="literal"/> -->
+			<!-- </wsdl:input> -->
+			<!-- <wsdl:output> -->
+				<!-- <soap:body use="literal"/> -->
+			<!-- </wsdl:output> -->
+			<!-- <wsdl:fault name="FaultName"/> -->
+		<!-- </wsdl:operation> -->
+	</wsdl:binding>
+	<wsdl:service name="ServiciosAZSign">
+		<wsdl:port name="ServiciosAZSign_SOAP" binding="azsw:ServiciosAZSign_SOAP">
+			<soap:address location="https://azsign.analitica.com.co/WebServices/SOAP/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

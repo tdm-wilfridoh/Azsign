@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Andres Schlesinger (Analitica) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.analitica.com.co/AZSign/Esquemas"
+	targetNamespace="http://www.analitica.com.co/AZSign/Esquemas" elementFormDefault="unqualified"
+	attributeFormDefault="unqualified">
+	<xs:element name="Acuerdo">
+		<xs:annotation>
+			<xs:documentation>Registra el acuerdo en AZSign</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="AcuerdoType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AcuerdoRsp">
+		<xs:annotation>
+			<xs:documentation>Respuesta Resgistro Acuerdo en AZSigm</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Documentos">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Documento">
+								<xs:complexType>
+									<xs:attribute name="Id" type="xs:string" use="required"/>
+									<xs:attribute name="Nombre" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Cuenta" type="xs:string" use="required"/>
+			<xs:attribute name="Aplicativo" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Aplicativo a quien se responde</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AcuerdoId" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Id Interno de AZSign para Acuerdos</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AcuerdoNombre" type="xs:string" use="required"/>
+			<xs:attribute name="FechaHora" type="xs:dateTime" use="required">
+				<xs:annotation>
+					<xs:documentation>Fecha y Hora Procesamiento</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Vencimiento" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SolicitarAcuerdoInfo">
+		<xs:annotation>
+			<xs:documentation>Solicita la informacion de un acuerdo</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Cuenta" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Aplicativo" use="required">
+				<xs:annotation>
+					<xs:documentation>Aplicativo que realiza la solicitud</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="AcuerdoId" use="required">
+				<xs:annotation>
+					<xs:documentation>Codigo del Acuerdo (Id AZSign) cuyo documento compilado se esta solicitando.
+Este Id es devuelto en el mensaje AcuerdoRsp.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="IncluirDocs" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AcuerdoInfo">
+		<xs:annotation>
+			<xs:documentation>Gramatica Rotorno de Informacion de un Acuerdo</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="AcuerdoInfoType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SolicitarDocumento">
+		<xs:annotation>
+			<xs:documentation>Solicita un doucumento dado un Id</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Cuenta" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Aplicativo" use="required">
+				<xs:annotation>
+					<xs:documentation>Aplicativo que realiza la solicitud</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="DocumentoId" use="required">
+				<xs:annotation>
+					<xs:documentation>Codigo del Acuerdo (Id AZSign) cuyo documento compilado se esta solicitando.
+Este Id es devuelto en el mensaje AcuerdoRsp.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- SolicitudDocumentoRsp  -->
+<!-- <xs:element name="SolicitudDocumentoRsp"> -->
+  <!-- <xs:annotation> -->
+    <!-- <xs:documentation>Respuesta Solicitud de documento</xs:documentation> -->
+  <!-- </xs:annotation> -->
+  <!-- <xs:complexType> -->
+    <!-- <xs:sequence> -->
+      <!-- <xs:element name="DocumentoPDF_Base64"> -->
+        <!-- <xs:annotation> -->
+          <!-- <xs:documentation>Documento en dase64 solicitado</xs:documentation> -->
+        <!-- </xs:annotation> -->
+        <!-- <xs:complexType> -->
+          <!-- <xs:simpleContent> -->
+            <!-- <xs:extension base="xs:base64Binary"> -->
+              <!-- <xs:attribute name="Nombre" type="xs:string" use="optional"> -->
+                <!-- <xs:annotation> -->
+                  <!-- <xs:documentation>Nombre del documento entregado</xs:documentation> -->
+                <!-- </xs:annotation> -->
+              <!-- </xs:attribute> -->
+            <!-- </xs:extension> -->
+          <!-- </xs:simpleContent> -->
+        <!-- </xs:complexType> -->
+      <!-- </xs:element> -->
+    <!-- </xs:sequence> -->
+    <!-- <xs:attribute name="Aplicativo" type="xs:string" use="required"> -->
+      <!-- <xs:annotation> -->
+        <!-- <xs:documentation>Aplicativo que realiza la Solicitud</xs:documentation> -->
+      <!-- </xs:annotation> -->
+    <!-- </xs:attribute> -->
+    <!-- <xs:attribute name="FechaHora" type="xs:dateTime" use="required"> -->
+      <!-- <xs:annotation> -->
+        <!-- <xs:documentation>Fecha y fora de Respuesta de la solicitud</xs:documentation> -->
+      <!-- </xs:annotation> -->
+    <!-- </xs:attribute> -->
+  <!-- </xs:complexType> -->
+<!-- </xs:element> -->
+
+	<xs:element name="Documento">
+		<xs:annotation>
+			<xs:documentation>Respuesta Solicitud de documento</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentoPDF_Base64">
+					<xs:annotation>
+						<xs:documentation>Documento en dase64 solicitado</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:base64Binary">
+								<xs:attribute name="Nombre" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>Nombre del documento entregado</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Cuenta" type="xs:string" use="required"/>
+			<xs:attribute name="Aplicativo" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Aplicativo que realiza la Solicitud</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="FechaHora" type="xs:dateTime" use="required">
+				<xs:annotation>
+					<xs:documentation>Fecha y fora de Respuesta de la solicitud</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WebHook">
+		<xs:annotation>
+			<xs:documentation>Mensaje Retornado por AZSign al sistema destino con la informacion relacionada al acuerdo afectado por un evento dado.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Cuenta">
+					<xs:annotation>
+						<xs:documentation>Id y nombre de la cuenta en AZSign</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Ambito">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Aplicativo" type="AplicativoType">
+								<xs:annotation>
+									<xs:documentation>Aplicativo Asociado al Webhook</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Cuenta" type="CuentaType">
+								<xs:annotation>
+									<xs:documentation>Cuenta Asociada al WebHook</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Grupo" type="GrupoType">
+								<xs:annotation>
+									<xs:documentation>Grupo Asociado al WebHook</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:attribute name="Id" type="xs:string"/>
+						<xs:attribute name="Nombre" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="Evento">
+					<xs:annotation>
+						<xs:documentation>Id, Nombre y fecha y hoa de la ocurrencia del evento.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="AcuerdoInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descricpcion en detalle del Acuerdo</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Id" type="xs:string" use="required"/>
+			<xs:attribute name="Nombre" type="xs:string" use="required"/>
+			<xs:attribute name="Url" type="xs:string" use="required"/>
+			<xs:attribute name="FechaHora" type="xs:dateTime" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Aplicativo" type="AplicativoType">
+		<xs:annotation>
+			<xs:documentation>Descritor de una acuerdo</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Cuenta" type="CuentaType">
+		<xs:annotation>
+			<xs:documentation>Descriptor de Cuenta</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Evento" type="EventoType">
+		<xs:annotation>
+			<xs:documentation>Descriptor de evento</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GrupoRegistro" type="GrupoType">
+		<xs:annotation>
+			<xs:documentation>Descriptor de un Grupo de registro de Acuerdo</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AcuerdoType">
+		<xs:annotation>
+			<xs:documentation>Estructura para Espesificar Un Acuerdo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GruposPartcipantes">
+				<xs:annotation>
+					<xs:documentation>Conjunto de Grupos de firmantes para  Flujos de Aprobacion</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Grupo" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Agrupamiento de participantes con el mismo rol. La firma de un participante de un grupo se asume como la firma del grupo completo</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Participante" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Participante</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="Email" use="required">
+												<xs:annotation>
+												<xs:documentation>Email del participante, sobre el cual AZSign enviara los email para procesos de firma.</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="6"/>
+												<xs:maxLength value="255"/>
+												<xs:pattern
+												value="([0-9a-zA-Z]([-._\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"/>
+												<xs:pattern value=""/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="Nombre" use="required">
+												<xs:annotation>
+												<xs:documentation>Nombre del Firmante</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="255"/>
+												<xs:minLength value="1"/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="Apellido" use="optional">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="128"/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="TipoIdentificacion" use="optional">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="3"/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="NumeroDocumento" use="optional">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="128"/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="Celular" use="optional">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="20"/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="Orden" use="required">
+									<xs:annotation>
+										<xs:documentation>Numeral que le indica a AZSign el orden en el flujo defirmas de cada grupo.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:unsignedInt">
+											<xs:totalDigits value="10"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="Rol" use="required">
+									<xs:annotation>
+										<xs:documentation>Tipo de Rol que ejecutara el grupo.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="A"/>
+											<xs:enumeration value="E"/>
+											<xs:enumeration value="F"/>
+											<xs:enumeration value="N"/>
+											<xs:enumeration value="R"/>
+											<xs:maxLength value="2"/>
+											<xs:minLength value="1"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="Nombre" use="required">
+									<xs:annotation>
+										<xs:documentation>Nombre del grupo</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="128"/>
+											<xs:minLength value="1"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Copias" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Copia" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Participante</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Email" use="required">
+									<xs:annotation>
+										<xs:documentation>Email del participante, sobre el cual AZSign enviara los email para procesos de firma.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:minLength value="6"/>
+											<xs:maxLength value="255"/>
+											<xs:pattern
+												value="([0-9a-zA-Z]([-._\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"/>
+											<xs:pattern value=""/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="Nombre" use="optional">
+									<xs:annotation>
+										<xs:documentation>Nombre del Firmante</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="255"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Mensaje" form="unqualified" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Mensaje desplegado a participante al momento de firmar</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Documentos">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Documento" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Documento codificado en Base64</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="Nombre" use="required">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:maxLength value="260"/>
+												<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="TipoMime" use="optional"
+											default="application/pdf">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:enumeration value="application/pdf"/>
+												<xs:enumeration value="application_vnd.ms/excel"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats-officedocument.spreadsheetml.template"/>
+												<xs:enumeration
+												value="application/vnd.ms-excel.sheet.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-excel.template.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-excel.addin.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-excel.sheet.binary.macroEnabled.12"/>
+												<xs:enumeration value="text/html"/>
+												<xs:enumeration value="image/pjpeg"/>
+												<xs:enumeration value="application/octet-stream"/>
+												<xs:enumeration value="text/plain"/>
+												<xs:enumeration value="application/msword"/>
+												<xs:enumeration value="application/msword"/>
+												<xs:enumeration value="image/gif"/>
+												<xs:enumeration value="text/xml"/>
+												<xs:enumeration value="image/x-png"/>
+												<xs:enumeration value="image/png"/>
+												<xs:enumeration
+												value="application/vnd.ms-powerpoint"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats-officedocument.presentationml.presentation"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats-officedocument.presentationml.template"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats-officedocument.presentationml.slideshow"/>
+												<xs:enumeration
+												value="application/vnd.ms-powerpoint.addin.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-powerpoint.presentation.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-powerpoint.template.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-powerpoint.slideshow.macroEnabled.12"/>
+												<xs:enumeration value="image/tiff"/>
+												<xs:enumeration value="image/jpeg"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats_xlsx"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats"/>
+												<xs:enumeration
+												value="application/vnd.openxmlformats-officedocument.wordprocessingml.template"/>
+												<xs:enumeration
+												value="application/vnd.ms-word.document.macroEnabled.12"/>
+												<xs:enumeration
+												value="application/vnd.ms-word.document.macroEnabled.12"/>
+												<xs:enumeration value="text/csv"/>
+												<xs:enumeration
+												value="application/vnd.oasis.opendocument.text"/>
+												<xs:enumeration value="application/rtf"/>
+												<xs:enumeration
+												value="application/vnd.oasis.opendocument.presentation"/>
+												<xs:enumeration
+												value="application/vnd.oasis.opendocument.spreadsheet"
+												/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="Codificacion" use="optional"
+											default="Base64">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:enumeration value="Base64"/>
+												<xs:enumeration value="IdDocAZSign"/>
+												<xs:enumeration value="Path"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Remitente" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="IdRemitente" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="50"/>
+								<xs:minLength value="1"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="Nombre" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+								<xs:minLength value="1"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="Email" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255"/>
+								<xs:minLength value="1"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="Organizacion" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="127"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="Dependencia" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="127"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="Telefono" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Cuenta" use="required">
+			<xs:annotation>
+				<xs:documentation>Id de la Cuenta en AZSign</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Grupo" use="required">
+			<xs:annotation>
+				<xs:documentation>Id de la Grupo en AZSign</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Aplicativo" use="required">
+			<xs:annotation>
+				<xs:documentation>Id del Aplicativo en AZSign</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Nombre" use="required">
+			<xs:annotation>
+				<xs:documentation>Nombre que se le dara al acuerdo o flujo de firmas</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="255"/>
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="TipoFirma" use="required">
+			<xs:annotation>
+				<xs:documentation>Tipo de Firma o modalidad de firma</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="E"/>
+					<xs:enumeration value="D"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Estado" use="required">
+			<xs:annotation>
+				<xs:documentation>Estado del Documento para AZSign.
+</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="1-P"/>
+					<xs:enumeration value="2-T"/>
+					<xs:maxLength value="5"/>
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="RefWebHook" use="optional">
+			<xs:annotation>
+				<xs:documentation>Referencias interna para propositos del aplicativo que envia la informacion.
+Para el caso de procesamiento con AZDigital via WebHooks, referirce al documento:
+Gestor de Firmas - AdobeSign.pptx</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1024"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="UrlPostFirma" use="optional">
+			<xs:annotation>
+				<xs:documentation>URL que puede presentar AZSign al finalizar un proceso de interaccion de firma con los usuarios.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="SegundoFacAut" use="optional">
+			<xs:annotation>
+				<xs:documentation>Segundo Factor de Autenticación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OTP"/>
+					<xs:enumeration value="VTU"/>
+					<xs:enumeration value="NA"/>
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="EstamparCronologicamente">
+			<xs:annotation>
+				<xs:documentation>Si el documento firmado va a llevar la estampa cronológica.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Vencimiento" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Fecha de vencimiento.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NotificarRemitente">
+			<xs:annotation>
+				<xs:documentation>Indica si se debe notificar al remitente cuando se firma un acuerdo</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="AcuerdoInfoType">
+		<xs:annotation>
+			<xs:documentation>Estructura para retornar informacion aserca dede un acuerdo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Estado">
+				<xs:annotation>
+					<xs:documentation>Estado del Acuerdo</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Id" type="xs:string" use="required"/>
+					<xs:attribute name="Nombre" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Cuenta"/>
+			<xs:element ref="GrupoRegistro"/>
+			<xs:element name="Origen">
+				<xs:annotation>
+					<xs:documentation>fuente origen de creacion del acuerdo</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Tipo" type="xs:string" use="required"/>
+					<xs:attribute name="Id" type="xs:string" use="required"/>
+					<xs:attribute name="Referencia" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GruposPartcipantes">
+				<xs:annotation>
+					<xs:documentation>Conjunto de Grupos de firmantes para  Flujos de Aprobacion</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Grupo" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Agrupamiento de participantes con el mismo rol. La firma de un participante de un grupo se asume como la firma del grupo completo</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Participante" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Participante</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Estado">
+												<xs:complexType>
+												<xs:attribute name="Id" type="xs:string"
+												use="required"/>
+												<xs:attribute name="Nombre" type="xs:string"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Observaciones" minOccurs="0"/>
+											</xs:sequence>
+											<xs:attribute name="Id" type="xs:string" use="required"/>
+											<xs:attribute name="Email" use="required">
+												<xs:annotation>
+												<xs:documentation>Email del participante, sobre el cual AZSign enviara los email para procesos de firma.</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="6"/>
+												<xs:pattern
+												value="([0-9a-zA-Z]([-._\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"/>
+												<xs:pattern value=""/>
+												</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="Nombre" type="xs:string"
+												use="required">
+												<xs:annotation>
+												<xs:documentation>Nombre del Firmante</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="Celular" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="FechaEnvioParaFirma"
+												type="xs:dateTime" use="optional"/>
+											<xs:attribute name="FechaLecturaParaFirma"
+												type="xs:dateTime" use="optional"/>
+											<xs:attribute name="IpLecturaParaFirma" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="FechaRespuesta" type="xs:dateTime"
+												use="optional"/>
+											<xs:attribute name="IpRespuesta" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="FechaEnvioDocumentoFirmado"
+												type="xs:dateTime" use="optional"/>
+											<xs:attribute name="FechaDescargaDocumentoFirmado"
+												type="xs:dateTime" use="optional"/>
+											<xs:attribute name="IpDescargaDocumentoFirmado"
+												type="xs:string" use="optional"/>
+											<xs:attribute name="NombreEnFirma" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="Identificacion" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="Organizacion" type="xs:string"
+												use="optional"/>
+											<xs:attribute name="Cargo" type="xs:string"
+												use="optional"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="Id" type="xs:string" use="required"/>
+								<xs:attribute name="Orden" type="xs:unsignedInt" use="required">
+									<xs:annotation>
+										<xs:documentation>Numeral que le indica a AZSign el orden en el flujo defirmas de cada grupo.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Rol" use="required">
+									<xs:annotation>
+										<xs:documentation>Tipo de Rol que ejecutara el grupo.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="A"/>
+											<xs:enumeration value="E"/>
+											<xs:enumeration value="F"/>
+											<xs:enumeration value="N"/>
+											<xs:enumeration value="R"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="Nombre" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>Nombre del grupo</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Mensaje" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Mensaje desplegado a participante al momento de firmar</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Observacionnes" minOccurs="0"/>
+			<xs:element name="Documentos" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Documento" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Documento codificado en Base64</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:base64Binary">
+										<xs:attribute name="Id" type="xs:string" use="required"/>
+										<xs:attribute name="Naturaleza"/>
+										<xs:attribute name="Nombre" type="xs:string" use="required">
+											<xs:annotation>
+												<xs:documentation>Nombre del documento (archivo) con extension.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="Orden" type="xs:int" use="required"/>
+										<xs:attribute name="FechaCarga" type="xs:dateTime"/>
+										<xs:attribute name="UsuarioCarga" type="xs:string"/>
+										<xs:attribute name="AplicacionCarga" type="xs:string"/>
+										<xs:attribute name="Eliminado" type="xs:boolean"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Copias">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Participante">
+							<xs:complexType>
+								<xs:attribute name="Email" type="xs:string"/>
+								<xs:attribute name="Nombre" type="xs:string"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="Nombre" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Nombre que se le dara al acuerdo o flujo de firmas</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RefWebHook" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Referencias interna para propositos del aplicativo que envia la informacion.
+Para el caso de procesamiento con AZDigital via WebHooks, referirce al documento:
+Gestor de Firmas - AdobeSign.pptx</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="UrlPostFirma" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>URL que puede presentar AZSign al finalizar un proceso de interaccion de firma con los usuarios.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FechaRecepcion" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="FechaVencimiento" type="xs:string" use="optional"/>
+		<xs:attribute name="FechaFinalizacion" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="FechaFirmaDigital" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="SegundoFacAut" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OTP"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="EstampadoCronologico" type="xs:boolean" use="optional"/>
+		<xs:attribute name="NotificarRemitente" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="EventoType">
+		<xs:annotation>
+			<xs:documentation>Gramatica elemento: Evento</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="Nombre" type="xs:string" use="required"/>
+		<xs:attribute name="FechaHora" type="xs:dateTime" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="CuentaType">
+		<xs:annotation>
+			<xs:documentation>Gramatica elemento: Cuenta</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Id" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Nombre" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GrupoType">
+		<xs:annotation>
+			<xs:documentation>Gramatica elemento: Grupo</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Id" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Nombre" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="255"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="AplicativoType">
+		<xs:annotation>
+			<xs:documentation>Gramatica elemento: Aplicativo</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Id" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Nombre" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="80"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="BuscarAcuerdos">
+		<xs:annotation>
+			<xs:documentation>Solicita los acuerdos que estan en tramite</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Cuenta" use="required"/>
+			<xs:attribute name="Aplicativo" use="required"/>
+			<xs:attribute name="Estado" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ListadoAcuerdos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Acuerdos">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ResumenAcuerdo" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="Id"/>
+									<xs:attribute name="Nombre"/>
+									<xs:attribute name="Estado"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Cuenta"/>
+			<xs:attribute name="Aplicativo"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

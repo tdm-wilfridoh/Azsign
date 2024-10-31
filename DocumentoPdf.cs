@@ -36,8 +36,23 @@ public static string docXML2 = @"<soapenv:Envelope xmlns:soapenv='http://schemas
     </soapenv:Body>
 </soapenv:Envelope>";
 
-//public static string ResponseAcuerdo = @"<?xml version='1.0' encoding='UTF-8'?><soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/'><soap:Header/><soap:Body><azs:AcuerdoRsp xmlns:azs='http://www.analitica.com.co/AZSign/Esquemas' Cuenta='20230317-094007-4c9c60-89584564' Aplicacion='20241022-124027-4fafe1-45992970' AcuerdoId='20241031-055648-474600-95639587' AcuerdoNombre='Acuerdo 1' Vencimiento='2024-11-30'><Documentos><Documento Id='20241031-055648-572f91-19636180' Nombre='Documento 1.pdf'/><Documento Id='20241031-055648-8d2c52-04781539' Nombre='Documento 2.pdf'/><Documento Id='20241031-055648-b4b761-50518802' Nombre='Documento 3.pdf'/></Documentos></azs:AcuerdoRsp></soap:Body></soap:Envelope>";
-public static string ResponseAcuerdo = @"<azs:AcuerdoRsp xmlns:azs='http://www.analitica.com.co/AZSign/Esquemas' Cuenta='20230317-094007-4c9c60-89584564' Aplicacion='20241022-124027-4fafe1-45992970' AcuerdoId='20241031-055648-474600-95639587' AcuerdoNombre='Acuerdo 1' Vencimiento='2024-11-30'><Documentos><Documento Id='20241031-055648-572f91-19636180' Nombre='Documento 1.pdf'/><Documento Id='20241031-055648-8d2c52-04781539' Nombre='Documento 2.pdf'/><Documento Id='20241031-055648-b4b761-50518802' Nombre='Documento 3.pdf'/></Documentos></azs:AcuerdoRsp>";
+public static string ResponseAcuerdo = @"<?xml version='1.0' encoding='UTF-8'?><soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/'><soap:Header/><soap:Body><azs:AcuerdoRsp xmlns:azs='http://www.analitica.com.co/AZSign/Esquemas' Cuenta='20230317-094007-4c9c60-89584564' Aplicacion='20241022-124027-4fafe1-45992970' AcuerdoId='20241031-055648-474600-95639587' AcuerdoNombre='Acuerdo 1' Vencimiento='2024-11-30'><Documentos><Documento Id='20241031-055648-572f91-19636180' Nombre='Documento 1.pdf'/><Documento Id='20241031-055648-8d2c52-04781539' Nombre='Documento 2.pdf'/><Documento Id='20241031-055648-b4b761-50518802' Nombre='Documento 3.pdf'/></Documentos></azs:AcuerdoRsp></soap:Body></soap:Envelope>";
+        //public static string ResponseAcuerdo = @"<azs:AcuerdoRsp xmlns:azs='http://www.analitica.com.co/AZSign/Esquemas' Cuenta='20230317-094007-4c9c60-89584564' Aplicacion='20241022-124027-4fafe1-45992970' AcuerdoId='20241031-055648-474600-95639587' AcuerdoNombre='Acuerdo 1' Vencimiento='2024-11-30'><Documentos><Documento Id='20241031-055648-572f91-19636180' Nombre='Documento 1.pdf'/><Documento Id='20241031-055648-8d2c52-04781539' Nombre='Documento 2.pdf'/><Documento Id='20241031-055648-b4b761-50518802' Nombre='Documento 3.pdf'/></Documentos></azs:AcuerdoRsp>";
+
+        public string Resp = @"<?xml version='1.0' encoding='UTF-8'?>
+ <soap:Envelope xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+<soap:Header/>
+<soap:Body>
+<azs:AcuerdoRsp Vencimiento='2024-11-30' AcuerdoNombre='Acuerdo 1' AcuerdoId='20241031-132650-702936-15341637' Aplicacion='20241022-124027-4fafe1-45992970' Cuenta='20230317-094007-4c9c60-89584564' xmlns:azs='http://www.analitica.com.co/AZSign/Esquemas'>
+<Documentos>
+<Documento Nombre='Documento 1.pdf' Id='20241031-132650-7ddf88-11946765'/>
+<Documento Nombre='Documento 2.pdf' Id='20241031-132650-b77c07-15098157'/>
+<Documento Nombre='Documento 3.pdf' Id='20241031-132650-e16cd8-22060853'/>
+</Documentos>
+</azs:AcuerdoRsp>
+</soap:Body>
+</soap:Envelope>";
+
 
     }
 }

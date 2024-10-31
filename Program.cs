@@ -1,18 +1,53 @@
-﻿using ServiceReference2;
+﻿using Microsoft.IdentityModel.Tokens;
+using ServiceReference2;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Selectors;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Security;
 using System.Text;
 using System.Xml.Linq;
 
 namespace Azsign
 {
 
-    class Program
+    public class MyX509CertificateValidator : X509CertificateValidator
+    {
+        private string _allowedIssuerName;
+
+        public MyX509CertificateValidator(string allowedIssuerName)
+        {
+            if (string.IsNullOrEmpty(allowedIssuerName))
+            {
+                throw new ArgumentNullException("allowedIssuerName", "[MyX509CertificateValidator] The string parameter allowedIssuerName was null or empty.");
+            }
+
+            _allowedIssuerName = allowedIssuerName;
+        }
+
+        public override void Validate(X509Certificate2 certificate)
+        {
+            // Check that there is a certificate.
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate", "[MyX509CertificateValidator] The X509Certificate2 parameter certificate was null.");
+            }
+
+            // Check that the certificate issuer matches the configured issuer.
+            if (!certificate.Subject.Contains("CN=azsign.analitica.com.co"))
+            {
+                throw new SecurityTokenValidationException
+                  (string.Format("Certificate was not issued by a trusted issuer. Expected: {0}, Actual: {1}", _allowedIssuerName, certificate.IssuerName.Name));
+            }
+        }
+    }
+
+        class Program
     {
 
 
@@ -37,8 +72,18 @@ namespace Azsign
         {
             var client2 = new ServiceReference2.ServiciosAZSign_SOAPClient(ServiceReference2.ServiciosAZSign_SOAPClient.EndpointConfiguration.ServiciosAZSign_SOAP);
 
-            client2.ClientCredentials.UserName.UserName = "20241022-124027-4fafe1-45992970";
-            client2.ClientCredentials.UserName.Password = "e20f6181814ba6eac7cb4e599d68dffc";
+            client2.ClientCredentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication();
+            client2.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
+            MyX509CertificateValidator myX509CertificateValidator = new MyX509CertificateValidator("CN=ServiceModelSamples-HTTPS-Server");
+            client2.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CustomCertificateValidator = myX509CertificateValidator;
+
+            var u = Convert.ToBase64String(Encoding.ASCII.GetBytes("20241022-124027-4fafe1-45992970:e20f6181814ba6eac7cb4e599d68dffc"));
+            //client2.ClientCredentials.UserName.UserName ="20241022-124027-4fafe1-45992970";
+            //client2.ClientCredentials.UserName.Password = "e20f6181814ba6eac7cb4e599d68dffc";
+
+            client2.ClientCredentials.UserName.UserName = u;
+            client2.ClientCredentials.UserName.Password = u;
+
 
 
             ServiceReference2.AcuerdoTypeGrupoParticipante[] ac = new ServiceReference2.AcuerdoTypeGrupoParticipante[]{
@@ -199,19 +244,24 @@ namespace Azsign
                 //var r = response.Content.ReadAsAsync<AcuerdoResponse>().Result;
 
                 //Console.WriteLine(responseContent);
+
+                //Test(responseContent);
             }
         }
 
         static void Test()
         {
             AcuerdoResponseSerialize(DocumentoPdf.ResponseAcuerdo);
+            //AcuerdoResponseSerialize(r);
+
         }
 
         static void AcuerdoResponseSerialize(string response)
         {
-            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AcuerdoResponse));
-            var str = new StringReader(response);
-            var resp = (AcuerdoResponse)serializer.Deserialize(str);
+            var acuerdoRespXML = RemoveEnvelopeXml(response);
+            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AcuerdoRsp));
+            var str = new StringReader(acuerdoRespXML);
+            var resp = (AcuerdoRsp)serializer.Deserialize(str);
         }
 
         static void SolicitarInfoAcuerdo()
@@ -300,6 +350,15 @@ namespace Azsign
             var des = new System.Xml.Serialization.XmlSerializer(typeof(ServiceReference2.AcuerdoInfo));
             var acuerdo = (ServiceReference2.AcuerdoInfo)des.Deserialize(new StringReader(acuerdoXML));
             return acuerdo;
+        }
+
+        static string RemoveEnvelopeXml(string envelope)
+        {
+            var index = envelope.IndexOf("</soap:Body>");
+            var content = envelope.Remove(index);
+            return content.Split("Body>")[1].Replace("\"", "'"); 
+            //return content.Split("Body>")[1];
+
         }
 
         static void ConvertB64ToPDF(byte[] value, string fileName)

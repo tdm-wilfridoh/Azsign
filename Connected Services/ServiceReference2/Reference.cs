@@ -2675,11 +2675,19 @@ namespace ServiceReference2
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
+
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+    [XmlRoot(Namespace = "http://www.analitica.com.co/AZSign/Esquemas", ElementName = "AcuerdoRsp")]
     public partial class AcuerdoRsp
     {
-        
+
+        //[XmlNamespaceDeclarations]
+        //public XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces(new[] {
+        //    new XmlQualifiedName("azs", "http://www.analitica.com.co/AZSign/Esquemas")
+        //});
+
         private AcuerdoRspDocumentos documentosField;
         
         private string cuentaField;
@@ -2690,7 +2698,7 @@ namespace ServiceReference2
         
         private string acuerdoNombreField;
         
-        private System.DateTime fechaHoraField;
+        private System.DateTime? fechaHoraField;
         
         private string vencimientoField;
         
@@ -2763,10 +2771,25 @@ namespace ServiceReference2
                 this.acuerdoNombreField = value;
             }
         }
-        
+
+
+        [System.Xml.Serialization.XmlAttributeAttribute("FechaHora")]
+        public string FechaHoraString
+        {
+            get
+            {
+                return this.fechaHoraField.HasValue ? XmlConvert.ToString(fechaHoraField.Value, XmlDateTimeSerializationMode.Unspecified)
+                : string.Empty;
+            }
+            set
+            {
+                this.fechaHoraField = !string.IsNullOrEmpty(value) ? XmlConvert.ToDateTime(Utility.ConvertirFechaToW3C(value), XmlDateTimeSerializationMode.Unspecified) : (System.DateTime?)null;
+            }
+        }
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public System.DateTime FechaHora
+        [System.Xml.Serialization.XmlIgnore()]
+        public System.DateTime? FechaHora
         {
             get
             {
@@ -3121,7 +3144,7 @@ namespace ServiceReference2
                 result.AllowCookies = true;
                 result.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
 
-                //result.Security.Transport.ClientCredentialType = System.ServiceModel.HttpClientCredentialType.Basic;
+                result.Security.Transport.ClientCredentialType = System.ServiceModel.HttpClientCredentialType.Basic;
 
                 //result.Security.Transport.ProxyCredentialType = System.ServiceModel.HttpProxyCredentialType.None;
                 //result.Security.Message.ClientCredentialType = System.ServiceModel.BasicHttpMessageCredentialType.UserName;

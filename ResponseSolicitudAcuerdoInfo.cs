@@ -8,14 +8,14 @@ using System.Xml.Serialization;
 namespace Azsign.WS
 {
 	[XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Envelope")]
-	public class Envelope<T>
+	public class ResponseSolicitudAcuerdoInfo
 	{
 
 		[XmlElement(ElementName = "Header")]
 		public object Header { get; set; }
 
 		[XmlElement(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
-		public Body<T> Body { get; set; }
+		public Body Body { get; set; }
 
 		[XmlAttribute(AttributeName = "soap-enc")]
 		public string SoapEnc { get; set; }
@@ -27,21 +27,21 @@ namespace Azsign.WS
 		public string Text { get; set; }
 	}
 
-    //[XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
-    //public class Body
-    //{
-
-    //    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
-    //    public ServiceReference2.AcuerdoInfo AcuerdoInfo { get; set; }
-    //}
-
     [XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
-    public class Body<T>
+    public class Body
     {
 
         [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
-        public T AcuerdoInfo { get; set; }
+        public ServiceReference2.AcuerdoInfo AcuerdoInfo { get; set; }
     }
+
+    //[XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
+    //public class Body<T>
+    //{
+
+    //    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+    //    public T AcuerdoInfo { get; set; }
+    //}
 
 
     //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]

@@ -30,77 +30,6 @@ namespace Azsign
             //Azsign();
             //Azsign2();
             SolicitarInfoAcuerdo();
-
-            System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
-            result.MaxBufferSize = int.MaxValue;
-            result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
-            result.MaxReceivedMessageSize = int.MaxValue;
-            result.AllowCookies = true;
-            result.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
-            result.Security.Transport.ClientCredentialType = System.ServiceModel.HttpClientCredentialType.Basic;
-            result.Security.Message.ClientCredentialType = System.ServiceModel.BasicHttpMessageCredentialType.UserName;
-            result.Security.Transport.ProxyCredentialType = System.ServiceModel.HttpProxyCredentialType.Basic;
-
-
-
-            var endp = new System.ServiceModel.EndpointAddress("https://azsign.analitica.com.co/WebServices/SOAP/");
-
-            var client = new ServiciosAZSign_SOAPClient(result, endp);
-            //client.ChannelFactory.Credentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
-
-            client.ClientCredentials.UserName.UserName = "wilfrido.herrera@tandemweb.com";
-            client.ClientCredentials.UserName.Password = "Tandem.2024";
-
-            AcuerdoTypeGrupoParticipante acuerdoTypeGrupoParticipante = new AcuerdoTypeGrupoParticipante();
-            AcuerdoTypeGrupoParticipante[] ac = new AcuerdoTypeGrupoParticipante[]{
-                new AcuerdoTypeGrupoParticipante()
-                {
-                    Nombre = "Wilfrido",
-                    Apellido = "Herrera",
-                    Email ="wilheba@hotmail.com",
-                }
-            };
-
-            var d = new AcuerdoTypeDocumento()
-            {
-                Nombre = "Documento Prueba Analitica.pdf",
-                TipoMime = AcuerdoTypeDocumentoTipoMime.applicationpdf,
-                Value = DocumentoPdf.doc,
-                Codificacion = AcuerdoTypeDocumentoCodificacion.Base64
-            };
-
-            var s = new Acuerdo()
-            {
-                Mensaje = "Prueba Azsign",
-                Documentos = new AcuerdoTypeDocumento[]
-                {
-                    d
-                },
-                Cuenta = "20230317-094007-4c9c60-89584564",
-                Aplicativo = "20241022-124027-4fafe1-45992970",
-                TipoFirma = AcuerdoTypeTipoFirma.E,
-                Estado = AcuerdoTypeEstado.Item1P,
-                RefWebHook = "AZDigital: (5)",
-                GruposPartcipantes = new AcuerdoTypeGrupo[]
-                {
-                    new AcuerdoTypeGrupo {
-                        Nombre = "Prueba",
-                        Orden = 0,
-                        Rol = AcuerdoTypeGrupoRol.E,
-                        Participante = ac
-                    }
-                },
-                Grupo = "20230317-094007-4e26a0-98466172"
-            };
-            //s.GruposPartcipantes = new AcuerdoTypeGrupo[] {
-            //    Nombre="Prueba",
-            //    Orden = 0,
-            //    Rol = AcuerdoTypeGrupoRol.E,
-            //    Participante = ac
-            //};
-            //client.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
-            var resp = client.Acuerdo(s);
-
         }
 
         static void Azsign()
@@ -284,22 +213,19 @@ namespace Azsign
                 IncluirDocs = true
             };
 
-            var env = new WS.Envelope<ServiceReference2.SolicitarAcuerdoInfo>() { 
-                Body = new WS.Body<ServiceReference2.SolicitarAcuerdoInfo>()
-                {
-                    AcuerdoInfo = acuerdoInfo
-                }
-            };
-
-
+            //var env = new WS.EnvelopeResponseAcuerdoInfo() { 
+            //    Body = new WS.Body()
+            //    {
+            //        AcuerdoInfo = acuerdoInfo
+            //    }
+            //};
 
 
             StringWriter stringWriter = new StringWriter();
             System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(acuerdoInfo.GetType());
-            //x.Serialize(Console.Out, acuerdo);
             x.Serialize(stringWriter, acuerdoInfo);
             var xmlSinCabecera = stringWriter.ToString().Split("\r\n", 2)[1];
-            var st = DocumentoPdf.docXML2.Replace("{AcuerdoXml}", xmlSinCabecera);
+            var st = String.Format(DocumentoPdf.docXML2, xmlSinCabecera);
 
             using (var httpClient = new HttpClient())
             {
@@ -309,11 +235,11 @@ namespace Azsign
                 var requestUrl = "https://azsign.analitica.com.co/WebServices/SOAP/";
                 var soapRequest = new StringContent(st, Encoding.UTF8, "text/xml");
 
-                System.Xml.Serialization.XmlSerializer y = new System.Xml.Serialization.XmlSerializer(env.GetType());
-                y.Serialize(stringWriter = new StringWriter(), env);
-                var tt = stringWriter.ToString();
+                //System.Xml.Serialization.XmlSerializer y = new System.Xml.Serialization.XmlSerializer(env.GetType());
+                //y.Serialize(stringWriter = new StringWriter(), env);
+                //var tt = stringWriter.ToString();
 
-                var respone = (httpClient.PostAsXmlAsync(requestUrl, env).Result).Content.ReadAsStringAsync().Result;
+                //var respone = (httpClient.PostAsXmlAsync(requestUrl, env).Result).Content.ReadAsStringAsync().Result;
 
                 var response = httpClient.PostAsync(requestUrl, soapRequest).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
@@ -328,23 +254,29 @@ namespace Azsign
                 //Deserealizar la respuesta al tipo AcuerdoInfo
                 var acuerdo = AcuerdoInfoSerialize(responseContent);
 
+                foreach (var doc in acuerdo.Documentos) {
+                    ConvertB64ToPDF(doc.Value, doc.Nombre);
+                 }
+
             }
         }
 
-        static WS.Envelope<ServiceReference2.AcuerdoInfo> EnvelopeSerialize(HttpResponseMessage httpResponseMessage)
+        static WS.ResponseSolicitudAcuerdoInfo EnvelopeSerialize(HttpResponseMessage httpResponseMessage)
         {
             var formatters = new List<MediaTypeFormatter>() {
                 new XmlMediaTypeFormatter(){ UseXmlSerializer = true } };
 
-            var response = httpResponseMessage.Content.ReadAsAsync<WS.Envelope<ServiceReference2.AcuerdoInfo>>(formatters).Result;
+            var r = httpResponseMessage.Content.ReadAsStringAsync().Result;
+
+            var response = httpResponseMessage.Content.ReadAsAsync<WS.ResponseSolicitudAcuerdoInfo>(formatters).Result;
             return response;
         }
 
-        static WS.Envelope<ServiceReference2.AcuerdoInfo> EnvelopeSerialize(string response)
+        static WS.ResponseSolicitudAcuerdoInfo EnvelopeSerialize(string response)
         {
             var responseTemp = response.Replace("\"", "'");
-            var des = new System.Xml.Serialization.XmlSerializer(typeof(WS.Envelope<ServiceReference2.AcuerdoInfo>));
-            var xm = (WS.Envelope<ServiceReference2.AcuerdoInfo>)des.Deserialize(new StringReader(responseTemp));
+            var des = new System.Xml.Serialization.XmlSerializer(typeof(WS.ResponseSolicitudAcuerdoInfo));
+            var xm = (WS.ResponseSolicitudAcuerdoInfo)des.Deserialize(new StringReader(responseTemp));
             return xm;
         }
 
@@ -357,6 +289,11 @@ namespace Azsign
             var des = new System.Xml.Serialization.XmlSerializer(typeof(ServiceReference2.AcuerdoInfo));
             var acuerdo = (ServiceReference2.AcuerdoInfo)des.Deserialize(new StringReader(acuerdoXML));
             return acuerdo;
+        }
+
+        static void ConvertB64ToPDF(byte[] value, string fileName)
+        {
+            File.WriteAllBytes(@$"C:\Users\WilfridoR\source\repos\Azsign\WS\Docs\Download\{fileName}", value);
         }
     }
 }

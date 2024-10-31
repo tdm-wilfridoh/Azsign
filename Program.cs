@@ -29,7 +29,8 @@ namespace Azsign
 
             //Azsign();
             //Azsign2();
-            SolicitarInfoAcuerdo();
+            //SolicitarInfoAcuerdo();
+            Test();
         }
 
         static void Azsign()
@@ -93,9 +94,6 @@ namespace Azsign
 
         static void Azsign2()
         {
-
-
-
             var doc1 = File.ReadAllBytes(@"C:\Users\WilfridoR\source\repos\Azsign\WS\Docs\Documento 1.pdf");
             var doc1B64 = Convert.ToBase64String(doc1);
 
@@ -138,14 +136,14 @@ namespace Azsign
                 {
                     Nombre = "Wilfrido",
                     Apellido = "Herrera",
-                    Email ="wilfrido.herrerab@gmail.com",
+                    Email = "wilfrido.herrerab@gmail.com",
                 },
-                new ServiceReference2.AcuerdoTypeGrupoParticipante()
-                {
-                    Nombre = "Robinson",
-                    Apellido = "Sanchez",
-                    Email ="robinson.sanchez@tandemweb.com",
-                }
+                //new ServiceReference2.AcuerdoTypeGrupoParticipante()
+                //{
+                //    Nombre = "Robinson",
+                //    Apellido = "Sanchez",
+                //    Email ="robinson.sanchez@tandemweb.com",
+                //}
             };
 
 
@@ -182,7 +180,7 @@ namespace Azsign
             //x.Serialize(Console.Out, acuerdo);
             x.Serialize(stringWriter, acuerdo);
             var camb = stringWriter.ToString().Split("\r\n", 2)[1];
-            var st = DocumentoPdf.docXML2.Replace("{AcuerdoXml}", camb);
+            var st = String.Format(DocumentoPdf.docXML2, camb);
             //var st = stringWriter.ToString().Split("\r\n", 2)[1];
 
             Console.WriteLine();
@@ -198,9 +196,22 @@ namespace Azsign
 
                 var response = httpClient.PostAsync(requestUrl, soapRequest).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
+                //var r = response.Content.ReadAsAsync<AcuerdoResponse>().Result;
 
                 //Console.WriteLine(responseContent);
             }
+        }
+
+        static void Test()
+        {
+            AcuerdoResponseSerialize(DocumentoPdf.ResponseAcuerdo);
+        }
+
+        static void AcuerdoResponseSerialize(string response)
+        {
+            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AcuerdoResponse));
+            var str = new StringReader(response);
+            var resp = (AcuerdoResponse)serializer.Deserialize(str);
         }
 
         static void SolicitarInfoAcuerdo()
@@ -248,7 +259,7 @@ namespace Azsign
                 //Extrayendo objeto Envelope utilizando ReadAsAsync<T> (recomendado)
                 var envelope = EnvelopeSerialize(response);
 
-                //Deserealizar la respuesta al tipo Envelope
+                //Deserealizar la respuesta al tipo ResponseSolicitudAcuerdoInfo
                 envelope = EnvelopeSerialize(responseContent);
 
                 //Deserealizar la respuesta al tipo AcuerdoInfo
@@ -266,7 +277,7 @@ namespace Azsign
             var formatters = new List<MediaTypeFormatter>() {
                 new XmlMediaTypeFormatter(){ UseXmlSerializer = true } };
 
-            var r = httpResponseMessage.Content.ReadAsStringAsync().Result;
+            //var r = httpResponseMessage.Content.ReadAsStringAsync().Result;
 
             var response = httpResponseMessage.Content.ReadAsAsync<WS.ResponseSolicitudAcuerdoInfo>(formatters).Result;
             return response;

@@ -2676,9 +2676,7 @@ namespace ServiceReference2
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
     //[System.Diagnostics.DebuggerStepThroughAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
-
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
     [XmlRoot(Namespace = "http://www.analitica.com.co/AZSign/Esquemas", ElementName = "AcuerdoRsp")]
     public partial class AcuerdoRsp
     {
@@ -2688,11 +2686,11 @@ namespace ServiceReference2
         //    new XmlQualifiedName("azs", "http://www.analitica.com.co/AZSign/Esquemas")
         //});
 
-        private AcuerdoRspDocumentos documentosField;
+        private AcuerdoRspDocumentos[] documentosField;
         
         private string cuentaField;
         
-        private string aplicativoField;
+        private string aplicacionField;
         
         private string acuerdoIdField;
         
@@ -2703,8 +2701,10 @@ namespace ServiceReference2
         private string vencimientoField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public AcuerdoRspDocumentos Documentos
+        //[System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Documento", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable = false)]
+        public AcuerdoRspDocumentos[] Documentos
         {
             get
             {
@@ -2732,15 +2732,15 @@ namespace ServiceReference2
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Aplicativo
+        public string Aplicacion
         {
             get
             {
-                return this.aplicativoField;
+                return this.aplicacionField;
             }
             set
             {
-                this.aplicativoField = value;
+                this.aplicacionField = value;
             }
         }
         
@@ -2816,35 +2816,35 @@ namespace ServiceReference2
         }
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
-    public partial class AcuerdoRspDocumentos
-    {
+   // /// <remarks/>
+   // [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
+   //// [System.Diagnostics.DebuggerStepThroughAttribute()]
+   // [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
+   // public partial class AcuerdoRspDocumentos
+   // {
         
-        private AcuerdoRspDocumentosDocumento documentoField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public AcuerdoRspDocumentosDocumento Documento
-        {
-            get
-            {
-                return this.documentoField;
-            }
-            set
-            {
-                this.documentoField = value;
-            }
-        }
-    }
+   //     private AcuerdoRspDocumentosDocumento documentoField;
+
+   //     /// <remarks/>
+   //     [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+   //     public AcuerdoRspDocumentosDocumento Documento
+   //     {
+   //         get
+   //         {
+   //             return this.documentoField;
+   //         }
+   //         set
+   //         {
+   //             this.documentoField = value;
+   //         }
+   //     }
+   // }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.analitica.com.co/AZSign/Esquemas")]
-    public partial class AcuerdoRspDocumentosDocumento
+    public partial class AcuerdoRspDocumentos
     {
         
         private string idField;
@@ -2904,10 +2904,16 @@ namespace ServiceReference2
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+    [XmlRoot(Namespace = "http://www.analitica.com.co/AZSign/Esquemas", ElementName = "AcuerdoRsp")]
     public partial class AcuerdoResponse
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.analitica.com.co/AZSign/Esquemas", Order=0)]
+        [XmlNamespaceDeclarations]
+        public XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces(new[] {
+            new XmlQualifiedName("azs", "http://www.analitica.com.co/AZSign/Esquemas")
+        });
         public ServiceReference2.AcuerdoRsp AcuerdoRsp;
         
         public AcuerdoResponse()

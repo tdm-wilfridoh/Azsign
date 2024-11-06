@@ -36,7 +36,216 @@ namespace ServiceReference2
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AcuerdoType))]
         System.Threading.Tasks.Task<ServiceReference2.SolicitarInfoAcuerdoResponse> SolicitarInfoAcuerdoAsync(ServiceReference2.SolicitarInfoAcuerdoRequest request);
     }
-    
+
+    //////////////////////////////
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+    public partial class WebHookAmbito
+    {
+
+        private object itemField;
+
+        private string idField;
+
+        private string nombreField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Aplicativo", typeof(AplicativoType), Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.Xml.Serialization.XmlElementAttribute("Cuenta", typeof(CuentaType), Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.Xml.Serialization.XmlElementAttribute("Grupo", typeof(GrupoType), Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public object Item
+        {
+            get
+            {
+                return this.itemField;
+            }
+            set
+            {
+                this.itemField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Nombre
+        {
+            get
+            {
+                return this.nombreField;
+            }
+            set
+            {
+                this.nombreField = value;
+            }
+        }
+    }
+
+
+
+
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+    [System.Xml.Serialization.XmlRootAttribute()]
+    public partial class WebHook
+    {
+
+        private CuentaType cuentaField;
+
+        private WebHookAmbito ambitoField;
+
+        private EventoType eventoField;
+
+        private AcuerdoInfo acuerdoInfoField;
+
+        private string idField;
+
+        private string nombreField;
+
+        private string urlField;
+
+        private System.DateTime fechaHoraField;
+
+        /// <remarks/>
+        public CuentaType Cuenta
+        {
+            get
+            {
+                return this.cuentaField;
+            }
+            set
+            {
+                this.cuentaField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public WebHookAmbito Ambito
+        {
+            get
+            {
+                return this.ambitoField;
+            }
+            set
+            {
+                this.ambitoField = value;
+            }
+        }
+
+        /// <remarks/>
+        public EventoType Evento
+        {
+            get
+            {
+                return this.eventoField;
+            }
+            set
+            {
+                this.eventoField = value;
+            }
+        }
+
+        /// <remarks/>
+        public AcuerdoInfo AcuerdoInfo
+        {
+            get
+            {
+                return this.acuerdoInfoField;
+            }
+            set
+            {
+                this.acuerdoInfoField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Nombre
+        {
+            get
+            {
+                return this.nombreField;
+            }
+            set
+            {
+                this.nombreField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Url
+        {
+            get
+            {
+                return this.urlField;
+            }
+            set
+            {
+                this.urlField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public System.DateTime FechaHora
+        {
+            get
+            {
+                return this.fechaHoraField;
+            }
+            set
+            {
+                this.fechaHoraField = value;
+            }
+        }
+    }
+
+
+    /////////////////////////////
+
+
+
+
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]

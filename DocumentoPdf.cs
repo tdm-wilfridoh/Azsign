@@ -53,6 +53,37 @@ public static string ResponseAcuerdo = @"<?xml version='1.0' encoding='UTF-8'?><
 </soap:Body>
 </soap:Envelope>";
 
-
+public static string WebHook = @"<?xml version='1.0' encoding='UTF-8'?>
+<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/'><soap:Header/>
+<soap:Body>
+<WebHook Id='20241030-180015-2d3a03-98402611' Nombre='WebHook_Prueba' Url='http://gestordefirmas.somee.com/GestorFirmas' FechaHora='2024-11-05T15:12:28-05:00'>
+  <Cuenta Id='' Nombre=''/>
+  <Ambito Id='AP' Nombre='Aplicación'>
+    <Aplicacion Id='20241022-124027-4fafe1-45992970' Nombre='TestWS'/>
+  </Ambito>
+  <Evento Id='FC' Nombre='Flujo de Firmas Completado' FechaHora='2024-11-05T15:12:28-05:00'/>
+  <AcuerdoInfo Id='20241031-055648-474600-95639587' Nombre='Acuerdo 1' Estado='3-F' RefWebHook='AZDigital: (5)' UrlPostFirma='' FechaRecepcion='2024-10-31 05:56:48' FechaVencimiento='2024-11-30' FechaFinalizacion='2024-11-05 15:12:23' FechaFirmaDigital='' SegundoFacAut='' EstampadoCronologico='0' NotificarRemitente=''>
+  <Estado Id='3-F' Nombre='Finalizado'/>
+  <Cuenta Id='20230317-094007-4c9c60-89584564' Nombre='Tandem SAS'/>
+  <GrupoRegistro Id='20230317-094007-4e26a0-98466172' Nombre='Grupo x Defecto'/>
+  <Origen Tipo='Usuario' Id='' Referencia=''/>
+  <GruposPartcipantes>
+    <Grupo Id='20241031-055649-40c144-98402138' Orden='0000000000' Rol='E' Nombre='Prueba'>
+      <Participante Id='20241031-055649-418f71-55706295' Email='wilheba@hotmail.com' Firma='20241030-180630-3a05b2-36565022.jpg' Nombre='Wilfrido' Apellido='Herrera' TipoIdentificacion='CC' DocumentoIdentificacion='' Celular='' NotificarWhatsApp='0' FechaEnvioParaFirma='2024-10-31 05:56:54' FechaLecturaParaFirma='2024-10-31 13:27:04' IpLecturaParaFirma='66.102.8.98' FechaRespuesta='2024-11-05 15:12:22' IpRespuesta='181.235.72.103' FechaEnvioDocumentoFirmado='2024-11-05 15:12:28' FechaDescargaDocumentoFirmado='' IpDescargaDocumentoFirmado='' IdentificacionEnFirma='111111' NombreEnFirma='Wilfrido' Identificacion='' Organizacion='' Cargo=''>
+        <Estado Id='2a-A' Nombre='Aprobado'/>
+        <Observacionnes/>
+      </Participante>
+      <Participante Id='20241031-055649-467cf6-97573447' Email='wilfrido.herrerab@gmail.com' Firma='' Nombre='Wilfrido' Apellido='Herrera' TipoIdentificacion='CC' DocumentoIdentificacion='' Celular='' NotificarWhatsApp='0' FechaEnvioParaFirma='2024-10-31 05:56:54' FechaLecturaParaFirma='' IpLecturaParaFirma='' FechaRespuesta='' IpRespuesta='' FechaEnvioDocumentoFirmado='' FechaDescargaDocumentoFirmado='' IpDescargaDocumentoFirmado='' IdentificacionEnFirma='' NombreEnFirma='' Identificacion='' Organizacion='' Cargo=''>
+        <Estado Id='1b-TP' Nombre='Turno perdido'/>
+        <Observacionnes/>
+      </Participante>
+    </Grupo>
+  </GruposPartcipantes>
+  <Mensaje>Prueba Azsign</Mensaje>
+  <Observacionnes/>
+  <Documentos/>
+  <Copias/>
+</AcuerdoInfo>
+</WebHook></soap:Body></soap:Envelope>";
     }
 }

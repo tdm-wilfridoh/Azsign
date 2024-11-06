@@ -60,10 +60,12 @@ namespace Azsign
         {
             //            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
+            //WebHookDeserealize();
+
             //Azsign();
-            //SolicitarFirmaAcuerdo();
-            SolicitarInfoAcuerdo();
-            Test();
+            SolicitarFirmaAcuerdo();
+            //SolicitarInfoAcuerdo();
+            //Test();
         }
 
 
@@ -139,10 +141,25 @@ namespace Azsign
                 GruposPartcipantes = new AcuerdoTypeGrupo[]
                 {
                     new AcuerdoTypeGrupo {
-                        Nombre = "Prueba",
-                        Orden = 0,
-                        Rol = AcuerdoTypeGrupoRol.E,
+                        Nombre = "Aprobación",
+                        Orden = 1,
+                        Rol = AcuerdoTypeGrupoRol.A,
                         Participante = participantes
+                    },
+                    new AcuerdoTypeGrupo
+                    {
+                        Nombre = "",
+                        Orden=0,
+                        Rol = AcuerdoTypeGrupoRol.F,
+                        Participante = new AcuerdoTypeGrupoParticipante[]
+                        {
+                            new AcuerdoTypeGrupoParticipante
+                            {
+                                Nombre="",
+                                Apellido="",
+                                Email=""
+                            }
+                        }
                     }
                 },
                 Grupo = "20230317-094007-4e26a0-98466172",
@@ -265,10 +282,9 @@ namespace Azsign
         {
 
             var xDoc = XDocument.Parse(response);
-            var e = xDoc.Descendants().Where(data => data.Name.LocalName == typeof(T).Name).ToList().FirstOrDefault();
-
+            var xmlBodyResponse = xDoc.Descendants().Where(element => element.Name.LocalName == typeof(T).Name).ToList().FirstOrDefault();
             var des = new System.Xml.Serialization.XmlSerializer(typeof(T));
-            var result = (T)des.Deserialize(e.CreateReader());
+            var result = (T)des.Deserialize(xmlBodyResponse.CreateReader());
             return result;
 
             //var index = response.IndexOf("</soap:Body>");
@@ -305,6 +321,11 @@ namespace Azsign
             var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AcuerdoRsp));
             var str = new StringReader(acuerdoRespXML);
             var resp = (AcuerdoRsp)serializer.Deserialize(str);
+        }
+
+        static void WebHookDeserealize()
+        {
+            var resp = ResponseSerialize<WebHook>(DocumentoPdf.WebHook);
         }
 
         static void Azsign()

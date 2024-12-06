@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Azsign.Modelos.FirmaAcuerdo.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Azsign
+namespace Azsign.Modelos.FirmaAcuerdo.Response
 {
 
     [XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Envelope")]
-    public class ResponseGestionAcuerdo
+    public class FirmaAcuerdoResponse
     {
 
         [XmlElement(ElementName = "Header")]
@@ -28,12 +29,13 @@ namespace Azsign
         public string Text { get; set; }
     }
 
-    [XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
+   // [XmlRoot(Namespace = "http://schemas.xmlsoap.org/soap/envelope/", ElementName = "Body")]
     public class Body
     {
 
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
-        public ServiceReference2.AcuerdoRsp AcuerdoRsp { get; set; }
+        //[System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [XmlElementAttribute("AcuerdoRsp", Namespace = "http://www.analitica.com.co/AZSign/Esquemas")]
+        public AcuerdoRsp AcuerdoRsp { get; set; }
     }
 }
 
